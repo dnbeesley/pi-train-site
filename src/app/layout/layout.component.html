@@ -1,0 +1,43 @@
+<svg height=700px width=1000px>
+  <!--[attr.height]="state.height" [attr.width]="state.width"-->
+  <g *ngFor="let line of state.lines; let i = index">
+    <marker [attr.id]="'mid-' + i" viewBox="0 0 60 60" refX="0" refY="30" markerUnits="strokeWidth" markerWidth="8" markerHeight="10" orient="auto">
+      <path d="M 0 0 L 60 30 L 0 60 z" fill="green" />
+    </marker>
+      <circle [attr.cx]="line.startNode.left"
+              [attr.cy]="line.startNode.top"
+              r="5"
+              fill="black" />
+      <polyline [attr.points]="getLinePoints(line)"
+            [attr.marker-mid]="'url(#mid-' + i + ')'"
+            fill="none"
+            stroke="black"
+            style="stroke-width: 2" />
+      <circle [attr.cx]="line.endNode.left"
+              [attr.cy]="line.endNode.top"
+              r="5"
+              fill="black" />
+  </g>
+  <g *ngFor="let turnOut of state.turnOuts">
+      <line [attr.x1]="turnOut.commonNode.left"
+            [attr.y1]="turnOut.commonNode.top"
+            [attr.x2]="(turnOut.commonNode.left + turnOut.forwardNode.left) / 2"
+            [attr.y2]="(turnOut.commonNode.top + turnOut.forwardNode.top) / 2"
+            stroke="black"
+            style="stroke-width: 2" />
+      <line [attr.x1]="(turnOut.commonNode.left + turnOut.forwardNode.left) / 2"
+            [attr.y1]="(turnOut.commonNode.top + turnOut.forwardNode.top) / 2"
+            [attr.x2]="turnOut.forwardNode.left"
+            [attr.y2]="turnOut.forwardNode.top"
+            stroke="black"
+            style="stroke-width: 2"
+            [ngClass]="{'dashed': turnOut.turnedOut}" />
+      <line [attr.x1]="(turnOut.commonNode.left + turnOut.forwardNode.left) / 2"
+            [attr.y1]="(turnOut.commonNode.top + turnOut.forwardNode.top) / 2"
+            [attr.x2]="turnOut.turnOutNode.left"
+            [attr.y2]="turnOut.turnOutNode.top"
+            stroke="black"
+            style="stroke-width: 2;"
+            [ngClass]="{'dashed': !turnOut.turnedOut}" />
+  </g>
+</svg>
