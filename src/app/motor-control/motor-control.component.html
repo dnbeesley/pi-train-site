@@ -1,0 +1,29 @@
+<table>
+  <tr *ngFor="let motorControl of motorControls">
+    <td>
+      {{motorControl.id}}</td>
+    <td>
+      <input type="range"
+             min="0"
+             max="1024"
+             [(ngModel)]="motorControl.speed"
+             (ngModelChange)="onSliderChange(motorControl)"
+             (mouseup)="onSliderMouseUp(motorControl)">
+    </td>
+    <td>
+      <input type="number"
+             min="0"
+             max="1024"
+             [(ngModel)]="motorControl.speed"
+             (ngModelChange)="webSocketService.sendMotorControlCmdAsync(motorControl)">
+    </td>
+    <td>
+      <label>
+      <input type="checkbox"
+             [(ngModel)]="motorControl.reversed"
+             (ngModelChange)="webSocketService.sendMotorControlCmdAsync(motorControl)">
+             Reverse
+            </label>
+    </td>
+  </tr>
+</table>

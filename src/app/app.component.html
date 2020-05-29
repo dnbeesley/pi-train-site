@@ -1,3 +1,8 @@
 <app-layout [state]="data"
         *ngIf="data">
 </app-layout>
+<div [style.width.px]="data.width"
+*ngIf="data">
+  <app-motor-control>
+  </app-motor-control>
+</div>

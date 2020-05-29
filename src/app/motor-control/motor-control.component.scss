@@ -1,0 +1,21 @@
+table {
+  tr {
+    td {
+      &:first-child {
+        width: 40px
+      }
+      &:nth-child(3) {
+        width: 100px
+      }
+      &:nth-child(4) {
+        width: 100px
+      }
+
+      input[type='range'] {
+        width: 95%
+      }
+    }
+  }
+
+  width: 100%
+}

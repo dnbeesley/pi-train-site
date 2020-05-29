@@ -1,3 +1,11 @@
-line.dashed {
+line{
+  &.dashed {
     stroke-dasharray: 5,5;
+  }
+
+  stroke-width: 2
+}
+
+polyline {
+  stroke-width: 2
 }

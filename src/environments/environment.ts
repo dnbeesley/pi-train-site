@@ -3,8 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  layoutStateBaseUrl: 'http://localhost:8080/api/layout',
   production: false,
-  apiBaseUrl: 'http://localhost:8080/api/layout'
+  sliderUpdateIncrement: 25,
+  webSocketUrl: 'http://localhost:8080/client-websocket'
 };
 
 /*
