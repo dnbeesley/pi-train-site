@@ -5,7 +5,7 @@
     <td>
       <input type="range"
              min="0"
-             max="1024"
+             max="255"
              [(ngModel)]="motorControl.speed"
              (ngModelChange)="onSliderChange(motorControl)"
              (mouseup)="onSliderMouseUp(motorControl)">
@@ -13,7 +13,7 @@
     <td>
       <input type="number"
              min="0"
-             max="1024"
+             max="255"
              [(ngModel)]="motorControl.speed"
              (ngModelChange)="webSocketService.sendMotorControlCmdAsync(motorControl)">
     </td>

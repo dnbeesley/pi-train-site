@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { MotorControl } from '../models/motor-control';
 import { Observable } from 'rxjs';
+import { TurnOut } from '../models/turn-out';
 
 // Declare SockJS and Stomp
 declare var SockJS;
@@ -32,10 +33,10 @@ export class WebSocketService {
     });
   }
 
-  getMotorControlCmdAsync(): Observable<MotorControl>{
-    return new Observable<MotorControl>(observer => {
+  getCmdAsync<TCmd>(source: string): Observable<TCmd>{
+    return new Observable<TCmd>(observer => {
       this.connectedPromise.then(() => {
-        this.stompClient.subscribe('/topic/motor-control', message => {
+        this.stompClient.subscribe(source, (message: { body: string; }) => {
           if (message.body) {
             observer.next(JSON.parse(message.body));
           }
@@ -44,9 +45,25 @@ export class WebSocketService {
     });
   }
 
-  sendMotorControlCmdAsync(motorControl: MotorControl) {
+  getMotorControlCmdAsync(): Observable<MotorControl>{
+    return this.getCmdAsync<MotorControl>('/topic/motor-control');
+  }
+
+  getTurnOutCmdAsync(): Observable<TurnOut>{
+    return this.getCmdAsync<TurnOut>('/topic/turn-out');
+  }
+
+  sendCmdAsync<TCmd>(destination: string, command: TCmd) {
     this.connectedPromise.then(() => {
-      this.stompClient.send('/app/send/motor-control' , {}, JSON.stringify(motorControl));
+      this.stompClient.send(destination , {}, JSON.stringify(command));
     });
+  }
+
+  sendMotorControlCmdAsync(motorControl: MotorControl) {
+    this.sendCmdAsync<MotorControl>('/app/send/motor-control', motorControl);
+  }
+
+  sendTurnOutCmdAsync(turnOut: TurnOut) {
+    this.sendCmdAsync<TurnOut>('/app/send/turn-out', turnOut);
   }
 }

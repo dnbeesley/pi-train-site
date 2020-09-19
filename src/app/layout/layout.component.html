@@ -16,7 +16,8 @@
               r="5"
               fill="black" />
   </g>
-  <g *ngFor="let turnOut of state.turnOuts">
+  <g *ngFor="let turnOut of state.turnOuts"
+     (click)="switch(turnOut)">
       <line [attr.x1]="turnOut.commonNode.left"
             [attr.y1]="turnOut.commonNode.top"
             [attr.x2]="(turnOut.commonNode.left + turnOut.forwardNode.left) / 2"
