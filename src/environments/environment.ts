@@ -5,6 +5,8 @@
 export const environment = {
   layoutStateBaseUrl: 'http://localhost:8080/api/layout',
   production: false,
+  gamepadDeadZone: 0.25,
+  gamepadPollingInterval: 500,
   sliderUpdateIncrement: 25,
   webSocketUrl: 'http://localhost:8080/client-websocket'
 };

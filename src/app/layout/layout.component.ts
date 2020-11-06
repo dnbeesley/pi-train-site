@@ -19,7 +19,8 @@ export class LayoutComponent implements OnInit {
       if (this.state && this.state.lines){
         this.state.lines.forEach(l => {
           if (l.motorControl.id === mc.id){
-            l.motorControl = mc;
+            l.motorControl.reversed = mc.reversed;
+            l.motorControl.speed = mc.speed;
           }
         });
       }

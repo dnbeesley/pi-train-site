@@ -1,29 +1,69 @@
 <table>
-  <tr *ngFor="let motorControl of motorControls">
-    <td>
-      {{motorControl.id}}</td>
-    <td>
-      <input type="range"
-             min="0"
-             max="255"
-             [(ngModel)]="motorControl.speed"
-             (ngModelChange)="onSliderChange(motorControl)"
-             (mouseup)="onSliderMouseUp(motorControl)">
-    </td>
-    <td>
-      <input type="number"
-             min="0"
-             max="255"
-             [(ngModel)]="motorControl.speed"
-             (ngModelChange)="webSocketService.sendMotorControlCmdAsync(motorControl)">
-    </td>
-    <td>
-      <label>
-      <input type="checkbox"
-             [(ngModel)]="motorControl.reversed"
-             (ngModelChange)="webSocketService.sendMotorControlCmdAsync(motorControl)">
-             Reverse
-            </label>
-    </td>
-  </tr>
+  <tbody *ngFor="let motorControl of motorControls">
+    <tr>
+      <td>
+        {{motorControl.id}}</td>
+      <td>
+        <input type="range"
+              min="0"
+              max="255"
+              [(ngModel)]="motorControl.speed"
+              (ngModelChange)="onSliderChange(motorControl)"
+              (mouseup)="onSliderMouseUp(motorControl)">
+      </td>
+      <td>
+        <input type="number"
+              min="0"
+              max="255"
+              [(ngModel)]="motorControl.speed"
+              (ngModelChange)="webSocketService.sendMotorControlCmdAsync(motorControl)">
+      </td>
+      <td>
+        <label>
+        <input type="checkbox"
+              [(ngModel)]="motorControl.reversed"
+              (ngModelChange)="webSocketService.sendMotorControlCmdAsync(motorControl)">
+          Reverse
+              </label>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>
+          <input type="checkbox"
+                [disabled]="!motorControl.gamepad || motorControl.axis === undefined"
+                [(ngModel)]="motorControl.isConnected"
+                (ngModelChange)="toggleConnectionToGamepad(motorControl)">
+            Control Using Gamepad
+        </label>
+      </td>
+      <td>
+        <select [disabled]="motorControl.isConnected"
+                [(ngModel)]="motorControl.gamepad">
+          <option *ngFor="let gp of gamepads"
+                  [ngValue]="gp">
+            {{gp && gp.id}}
+          </option>
+        </select>
+      </td>
+      <td>
+        <label>
+          Axis:
+          <input type="number"
+                [disabled]="motorControl.isConnected"
+                [(ngModel)]="motorControl.axis"
+                [max]="motorControl.gamepad && (motorControl.gamepad.axes.length - 1)">
+                </label>
+      </td>
+      <td>
+        <label>
+          <input type="checkbox"
+                [disabled]="motorControl.isConnected"
+                [(ngModel)]="motorControl.isInverted"
+                (ngModelChange)="webSocketService.sendMotorControlCmdAsync(motorControl)">
+            Inverted
+          </label>
+      </td>
+    </tr>
+  </tbody>
 </table>
